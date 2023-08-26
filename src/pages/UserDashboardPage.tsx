@@ -6,7 +6,7 @@ import {VerticalContainer} from "../components/verticalContainer/VerticalContain
 import {TravelEntry} from "../components/travel/TravelEntry";
 
 export const UserDashboardPage = () => {
-    const accessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
+    const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
 
     return (
         <div>
@@ -21,7 +21,7 @@ export const UserDashboardPage = () => {
                    </VerticalContainer>
                </div>
                <div className="half-screen mobile-bottom">
-                   <MapContainer accessToken={accessToken} >
+                   <MapContainer accessToken={mapboxAccessToken} >
 
                    </MapContainer>
                </div>
