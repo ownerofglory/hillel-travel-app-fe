@@ -1,0 +1,9 @@
+.map-container {
+    height: 100%;
+    min-height: 40vh;
+    padding-top: 20px;
+}
+
+.mapboxgl-canvas-container {
+    min-height: 40vh;
+}

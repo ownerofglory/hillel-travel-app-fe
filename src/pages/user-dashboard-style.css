@@ -1,0 +1,30 @@
+.half-screen {
+    min-height: 90vh;
+    min-width: 50vw;
+}
+
+.flex-container-hor {
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+}
+
+@media (max-width: 480px) {
+    .flex-container-ver {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .half-screen {
+        min-height: 45vh;
+    }
+
+    .mobile-top {
+        min-height: 50vh;
+    }
+
+    .mobile-bottom {
+        min-height: 40vh;
+    }
+
+}

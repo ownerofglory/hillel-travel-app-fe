@@ -1,0 +1,21 @@
+.vertical-container {
+    padding: 20px;
+    max-height: 50vh;
+    overflow: scroll;
+}
+
+.vertical-scroll-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.vertical-scroll-container .travel-entry {
+    margin-bottom: 20px;
+}
+
+.vertical-scroll-container :last-child {
+    margin-bottom: 0;
+}
+
