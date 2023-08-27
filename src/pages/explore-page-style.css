@@ -1,0 +1,9 @@
+.full-screen-map {
+    min-height: 90vh;
+}
+
+.map-container {
+    width: 100vw;
+    height: 90vh;
+    padding: 0;
+}
