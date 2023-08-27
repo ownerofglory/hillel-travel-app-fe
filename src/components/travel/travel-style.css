@@ -7,6 +7,20 @@
     flex-direction: row;
 }
 
+.travel-entry-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.reaction-button-container * {
+    margin-right: 5px;
+}
+
+.reaction-button * {
+    margin-left: 5px;
+}
+
 @media (max-width: 480px) {
     .travel-entry .card {
         display: flex;

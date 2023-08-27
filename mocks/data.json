@@ -1,0 +1,11 @@
+{
+  "/api/travelEntries": {
+    "get": [
+      {
+        "id": 1,
+        "title": "Trip 1",
+        "description": "Trip description 1"
+      }
+    ]
+  }
+}

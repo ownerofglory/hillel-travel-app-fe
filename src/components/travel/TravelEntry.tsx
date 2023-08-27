@@ -1,6 +1,8 @@
 import React from "react";
 import './travel-style.css'
 import {Button, Card} from "react-bootstrap";
+import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const TravelEntry = () => {
     return (
@@ -13,7 +15,20 @@ export const TravelEntry = () => {
                         Some quick example text to build on the card title and make up the
                         bulk of the card's content.
                     </Card.Text>
-                    <Button variant="primary">View</Button>
+                    <div className="travel-entry-bottom">
+                        <Button variant="primary">View</Button>
+
+                        <div className={'reaction-button-container'}>
+                            <Button className={'reaction-button'} variant="outline-light">
+                                <FontAwesomeIcon icon={faHeart} />
+                                <span>5</span>
+                            </Button>
+                            <Button className={'reaction-button'}  variant="outline-light">
+                                <FontAwesomeIcon icon={faComment} />
+                                <span>3</span>
+                            </Button>
+                        </div>
+                    </div>
                 </Card.Body>
             </Card>
         </div>
