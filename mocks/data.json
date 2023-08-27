@@ -4,7 +4,58 @@
       {
         "id": 1,
         "title": "Trip 1",
-        "description": "Trip description 1"
+        "description": "Trip description 1",
+        "locations": [
+          {
+            "latitude": 8,
+            "longitude": 40,
+            "locationName": "Some location"
+          },
+          {
+            "latitude": 7,
+            "longitude": 40.1,
+            "locationName": "Some location"
+          },
+          {
+            "latitude": 7.1,
+            "longitude": 40.1,
+            "locationName": "Some location"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Trip 2",
+        "description": "Trip description 2",
+        "locations": [
+          {
+            "latitude": 9.4,
+            "longitude": 36,
+            "locationName": "Some location"
+          },
+          {
+            "latitude": 9.4,
+            "longitude": 36.7,
+            "locationName": "Some location"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Trip 3",
+        "description": "Trip description 3",
+        "locations": [
+          {
+            "latitude": 38,
+            "longitude": 9,
+            "locationName": "Some location"
+          },
+          {
+            "latitude": 38,
+            "longitude": 9.1,
+            "locationName": "Some location"
+          }
+        ]
       }
     ]
   }

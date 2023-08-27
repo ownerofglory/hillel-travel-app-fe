@@ -1,5 +1,8 @@
+import {LocationModel} from "./locationModel";
+
 export interface TravelEntryModel {
-    id?:  Number
+    id:  number | null
     title: string
     description: string | ''
+    locations: LocationModel[]
 }

@@ -1,10 +1,21 @@
 .travel-entry {
-
+    width: 100%;
 }
 
 .travel-entry .card {
     display: flex;
     flex-direction: row;
+    width: 100%;
+}
+
+.travel-entry .card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.travel-entry .card img {
+    width: 50%;
 }
 
 .travel-entry-bottom {
@@ -29,5 +40,10 @@
 
     .travel-entry .card img {
         max-height: 200px;
+        width: auto;
+    }
+
+    .card-body div {
+        margin-bottom: 10px;
     }
 }
