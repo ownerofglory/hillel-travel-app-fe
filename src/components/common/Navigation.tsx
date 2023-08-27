@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {NavigationProps} from "../../props/navigationProps";
 
-export const Navigation: React.FC<NavigationProps> = () => {
-    const [loggedIn, setLoggedIn] = useState(false)
+export const Navigation: React.FC<NavigationProps> = (props) => {
+    const [loggedIn, setLoggedIn] = useState(props.loggedIn)
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
