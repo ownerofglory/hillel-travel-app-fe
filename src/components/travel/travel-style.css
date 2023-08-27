@@ -1,3 +1,19 @@
 .travel-entry {
 
 }
+
+.travel-entry .card {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 480px) {
+    .travel-entry .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .travel-entry .card img {
+        max-height: 200px;
+    }
+}

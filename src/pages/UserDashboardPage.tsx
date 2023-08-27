@@ -14,7 +14,11 @@ export const UserDashboardPage = () => {
 
            <div className="flex-container-hor flex-container-ver">
                <div className="half-screen mobile-top">
+                   <h2>Your trips</h2>
                    <VerticalContainer>
+                       <TravelEntry/>
+                       <TravelEntry/>
+                       <TravelEntry/>
                        <TravelEntry/>
                        <TravelEntry/>
                        <TravelEntry/>
