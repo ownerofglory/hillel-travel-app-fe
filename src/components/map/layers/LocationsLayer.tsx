@@ -1,10 +1,12 @@
-import {Layer, SymbolLayer} from "react-map-gl";
+import {Layer, SymbolLayer, useMap} from "react-map-gl";
 import React from "react";
 import {MapLayerProps} from "../../../props/mapLayerProps";
 
 export const LocationsLayer: React.FC<MapLayerProps> = ({ children}) => {
+    const {current: map} = useMap()
+
     const layerStyle: SymbolLayer = {
-        id: 'point',
+        id: 'locationLayer',
         type: 'symbol',
         source: 'locationSource',
         layout: {
@@ -12,6 +14,10 @@ export const LocationsLayer: React.FC<MapLayerProps> = ({ children}) => {
             'icon-size': 0.08
         }
     };
+
+    map!.on('click', 'locationLayer', event => {
+        console.log(event)
+    })
 
     return (
         <Layer {...layerStyle}>

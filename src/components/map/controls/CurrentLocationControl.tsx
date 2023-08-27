@@ -20,7 +20,7 @@ export const CurrentLocationControl = () => {
     }
 
     return (
-        <Button variant="primary" onClick={e => onGetCurrentLocation()}>
+        <Button className={'map-control'} variant="primary" onClick={e => onGetCurrentLocation()}>
             <FontAwesomeIcon icon={faLocationCrosshairs} style={{color: " #fcfcfc",}} />
         </Button>
     );

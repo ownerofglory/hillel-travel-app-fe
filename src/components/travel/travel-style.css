@@ -14,8 +14,14 @@
     justify-content: space-around;
 }
 
+.travel-entry .card .card-body:hover {
+    background-color: #5555558f;
+}
+
 .travel-entry .card img {
     width: 50%;
+    position: relative;
+    border-radius: 0.375rem;
 }
 
 .travel-entry-bottom {
@@ -32,10 +38,58 @@
     margin-left: 5px;
 }
 
+.image-overlay-desktop {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    color: white;
+    border-radius: 0.375rem;
+}
+
+.gradient-overlay-desktop {
+    width: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2));
+    z-index: 1;
+    border-radius: 0.375rem;
+}
+
+.title-mobile {
+    display: none;
+}
+
 @media (max-width: 480px) {
+    .title-mobile {
+        display: block;
+    }
+
+    .image-overlay-desktop {
+        display: none;
+    }
+
+    .gradient-overlay-desktop {
+        display: none;
+    }
+
     .travel-entry .card {
         display: flex;
         flex-direction: column;
+    }
+
+    .travel-entry .card .card-body:hover {
+        background-color: #55555500;
     }
 
     .travel-entry .card img {
@@ -45,5 +99,41 @@
 
     .card-body div {
         margin-bottom: 10px;
+    }
+
+    .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        color: white;
+        border-radius: 0.375rem;
+    }
+
+    .gradient-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
+        z-index: 1;
+        border-radius: 0.375rem;
+    }
+
+    .card-text,
+    .card-title {
+        z-index: 3;
+        color: white;
+    }
+
+    .reaction-button-container button {
+        background-color: rgba(0, 0, 0, 0.3);
     }
 }

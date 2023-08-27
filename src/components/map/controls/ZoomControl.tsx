@@ -25,10 +25,10 @@ export const ZoomControl = () => {
 
     return (
         <div className={'zoom-buttons'}>
-            <Button variant="primary" onClick={e => onZoomIn()}>
+            <Button className={'map-control'} variant="primary" onClick={e => onZoomIn()}>
                 <FontAwesomeIcon icon={faMagnifyingGlassPlus} style={{color: " #fcfcfc",}} />
             </Button>
-            <Button variant="primary" onClick={e => onZoomOut()}>
+            <Button className={'map-control'}  variant="primary" onClick={e => onZoomOut()}>
                 <FontAwesomeIcon icon={faMagnifyingGlassMinus} style={{color: " #fcfcfc",}} />
             </Button>
         </div>

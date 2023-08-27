@@ -16,6 +16,10 @@
     top: 5px;
 }
 
+.map-control {
+    font-size: 32px;
+}
+
 .zoom-buttons button {
     margin:  2px 0 2px 0;
     display: flex;
@@ -30,6 +34,7 @@
 
 .add-trip-control button {
     padding: 10px;
+    font-size: 36px;
 }
 
 .add-trip-control button :last-child {
@@ -46,6 +51,10 @@
         bottom: 5px;
     }
 
+    .map-control {
+        font-size: 14px;
+    }
+
     .zoom-buttons button {
         margin-bottom: 2px;
     }
@@ -55,4 +64,10 @@
         left: auto;
         right: 5px;
     }
+
+    .add-trip-control button {
+        padding: 10px;
+        font-size: 16px;
+    }
+
 }
