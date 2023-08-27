@@ -19,7 +19,7 @@ export const TravelEntry: React.FC<TravelEntryProps> = ({travelEntry, showLocati
                 <div className="gradient-overlay"></div>
                 <div className="gradient-overlay-desktop"></div>
                 <div className="image-overlay-desktop">
-                    <Card.Title>{travelEntry.title}</Card.Title>
+                    <Card.Title className={'travel-title-desktop'}>{travelEntry.title}</Card.Title>
                 </div>
                 <Card.Body className={'image-overlay'}>
                     <div>

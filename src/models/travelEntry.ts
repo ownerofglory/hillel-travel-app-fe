@@ -4,5 +4,6 @@ export interface TravelEntryModel {
     id:  number | null
     title: string
     description: string | ''
-    locations: LocationModel[]
+    locations: LocationModel[],
+    createdAt?: Date
 }
