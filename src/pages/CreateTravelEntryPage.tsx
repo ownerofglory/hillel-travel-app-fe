@@ -8,7 +8,7 @@ export const CreateTravelEntryPage = () => {
 
     return (
         <div>
-            <Navigation />
+            <Navigation loggedIn={true} />
 
             <div className="flex-container-hor flex-container-ver">
                 <div className="half-screen mobile-top">

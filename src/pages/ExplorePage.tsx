@@ -7,7 +7,7 @@ export const ExplorePage = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     return (
         <div>
-            <Navigation />
+            <Navigation loggedIn={true} />
 
             <div className="full-screen-map">
                 <MapContainer accessToken={mapboxAccessToken} >

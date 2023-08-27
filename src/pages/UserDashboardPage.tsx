@@ -8,7 +8,6 @@ import data from "../mockData"
 import {LocationModel} from "../models/locationModel";
 import {LocationsSource} from "../components/map/sources/LocationsSource";
 import {LocationsLayer} from "../components/map/layers/LocationsLayer";
-import {Layer, Source, SymbolLayer} from "react-map-gl";
 
 export const UserDashboardPage = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
@@ -22,7 +21,7 @@ export const UserDashboardPage = () => {
 
     return (
         <div>
-            <Navigation />
+            <Navigation loggedIn={true} />
 
            <div className="flex-container-hor flex-container-ver">
                <div className="half-screen mobile-top">
