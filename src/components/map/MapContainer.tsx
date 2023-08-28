@@ -1,4 +1,11 @@
-import {Map, MapboxEvent, ViewStateChangeEvent} from "react-map-gl";
+import {
+    Map,
+    MapboxEvent,
+    MapLayerMouseEvent,
+    MapLayerTouchEvent,
+    MapMouseEvent,
+    ViewStateChangeEvent
+} from "react-map-gl";
 import React, {useState} from "react";
 import './map-container-style.css'
 import {MapContainerProps} from "../../props/mapContainerProps";
@@ -18,7 +25,8 @@ const DEFAULT_MAP_STYLE = {height: '100%', width: '100%'}
 export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
                                                               children,
                                                               style,
-                                                              boundingBoxChangeHandler}) => {
+                                                              boundingBoxChangeHandler,
+                                                              mapClickedHandler}) => {
 
     const [zoom, setZoom] = useState(DEFAULT_ZOOM)
     const [coords, setCoords] = useState(DEFAULT_COORDS);
@@ -54,6 +62,21 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
         await onBoundingBoxChange(bbox)
     }
 
+    const onMapClicked = async (e: MapLayerMouseEvent) => {
+        console.log(e)
+        const point = e.lngLat
+        if (mapClickedHandler) {
+            await mapClickedHandler({latitude: point.lat, longitude: point.lng})
+        }
+    }
+
+    const onMapTouchEnded = async (e: MapLayerTouchEvent) => {
+        const point = e.lngLat
+        if (mapClickedHandler) {
+            await mapClickedHandler({latitude: point.lat, longitude: point.lng})
+        }
+    }
+
     return (
         <div className="map-container">
             <Map mapboxAccessToken={accessToken}
@@ -63,6 +86,8 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
                  attributionControl={false}
                  onLoad={onMapLoad}
                  onMoveEnd={onMapMoveEnd}
+                 onClick={onMapClicked}
+                 onTouchEnd={onMapTouchEnded}
             >
                 <AddTripControl />
                 <VerticalControlContainer>

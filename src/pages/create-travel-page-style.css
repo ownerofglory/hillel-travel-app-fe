@@ -1,0 +1,47 @@
+.half-screen {
+    min-height: 90vh;
+    min-width: 50vw;
+}
+
+.vertical-container {
+    max-height: 68vh;
+}
+
+.vertical-scroll-container .card {
+    margin-bottom: 20px;
+}
+
+.vertical-scroll-container :last-child {
+    margin-bottom: 0;
+}
+
+.content-container {
+    padding: 20px;
+}
+
+.content-container input, p, h2 {
+    margin-bottom: 20px;
+}
+
+.content-container .vertical-container {
+    padding: 20px;
+}
+
+@media (max-width: 480px) {
+    .half-screen {
+        min-height: 40vh;
+    }
+
+    .mobile-top {
+        min-height: 45vh;
+    }
+
+    .mobile-bottom {
+        min-height: 40vh;
+    }
+
+    .vertical-container {
+        max-height: 28vh;
+    }
+
+}

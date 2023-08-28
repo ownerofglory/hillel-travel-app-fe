@@ -1,4 +1,5 @@
 import {LocationModel} from "../models/locationModel";
+import {Coords} from "../models/coords";
 
 const locationToPoint = (location: LocationModel): GeoJSON.Feature<GeoJSON.Geometry> => {
     const geo: GeoJSON.Point = {
@@ -46,8 +47,23 @@ const locationsToBoundingBox = (locations?: LocationModel[]): GeoJSON.BBox => {
     return [minLongitude, minLatitude, maxLongitude, maxLatitude];
 }
 
+const formatSingleCoord = (coord: number, isLatitude: boolean): string => {
+    const cardinal = isLatitude ? (coord >= 0 ? 'N' : 'S') : (coord >= 0 ? 'E' : 'W');
+    const absoluteValue = Math.abs(coord);
+
+    const degrees = Math.floor(absoluteValue);
+    const minutes = Math.floor((absoluteValue - degrees) * 60);
+
+    return `${degrees}° ${String(minutes).padStart(2, '0')}′${cardinal}`;
+};
+
+const formatCoords = (coords: Coords): string => {
+    return `${formatSingleCoord(coords.longitude, false)}  ${formatSingleCoord(coords.latitude, true)}`;
+}
+
 export const geoUtil = {
     locationToPoint: locationToPoint,
     locationsToFeatureCollection: locationsToFeatureCollection,
-    locationsToBoundingBox: locationsToBoundingBox
+    locationsToBoundingBox: locationsToBoundingBox,
+    formatCoords: formatCoords
 }

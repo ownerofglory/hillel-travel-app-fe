@@ -18,7 +18,7 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
                                 <Nav.Link href="/explore">Explore</Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link href="/setting">Login</Nav.Link>
+                                <Nav.Link href="/setting">Settings</Nav.Link>
                                 <Nav.Link href="/logout">
                                     Logout
                                 </Nav.Link>

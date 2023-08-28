@@ -1,0 +1,35 @@
+.location-card {
+    width: 100%;
+}
+
+.flex-child img {
+    min-width: 180px;
+    width: 220px;
+}
+
+.horizontal-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-body-container {
+    min-width: 28vw;
+}
+
+.location-body {
+    width: 100%;
+    min-width: 12vw;
+}
+
+@media (max-width: 480px) {
+    .flex-child img {
+        min-width: 100px;
+        width: 120px;
+    }
+
+    .vertical-container, .vertical-scroll-container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
