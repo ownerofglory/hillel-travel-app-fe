@@ -10,7 +10,7 @@ export const ExplorePage = () => {
             <Navigation loggedIn={true} />
 
             <div className="full-screen-map">
-                <MapContainer accessToken={mapboxAccessToken} >
+                <MapContainer accessToken={mapboxAccessToken} style={{height: '90vh'}} >
 
                 </MapContainer>
             </div>
