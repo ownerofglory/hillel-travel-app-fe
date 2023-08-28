@@ -3,7 +3,6 @@ import {
     MapboxEvent,
     MapLayerMouseEvent,
     MapLayerTouchEvent,
-    MapMouseEvent,
     ViewStateChangeEvent
 } from "react-map-gl";
 import React, {useState} from "react";
@@ -49,21 +48,24 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
     }
 
     const onMapMoveEnd = async (e: ViewStateChangeEvent) => {
-        const bounds = e.target.getBounds()
+        if (e.type == 'moveend' || e.type == 'zoomend') {
+            const bounds = e.target.getBounds()
 
-        const bbox: BoundingBox = {northEast: {
-                longitude: bounds.getNorthEast().lng,
-                latitude: bounds.getNorthEast().lat
-            }, southWest: {
-                longitude: bounds.getSouthWest().lng,
-                latitude: bounds.getSouthWest().lat
+            const bbox: BoundingBox = {northEast: {
+                    longitude: bounds.getNorthEast().lng,
+                    latitude: bounds.getNorthEast().lat
+                }, southWest: {
+                    longitude: bounds.getSouthWest().lng,
+                    latitude: bounds.getSouthWest().lat
+                }
             }
+            return await onBoundingBoxChange(bbox)
         }
-        await onBoundingBoxChange(bbox)
+
+        return Promise.resolve()
     }
 
     const onMapClicked = async (e: MapLayerMouseEvent) => {
-        console.log(e)
         const point = e.lngLat
         if (mapClickedHandler) {
             await mapClickedHandler({latitude: point.lat, longitude: point.lng})

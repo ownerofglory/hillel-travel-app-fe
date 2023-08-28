@@ -61,6 +61,7 @@ export const CreateTravelEntryPage = () => {
                         }
                     </VerticalContainer>
 
+
                     <Button variant="primary" disabled={!pickedLocations || !tripName}>Save</Button>
                 </div>
                 <div className="half-screen mobile-bottom">
