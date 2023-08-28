@@ -12,6 +12,7 @@ import {Button, Form } from "react-bootstrap";
 export const CreateTravelEntryPage = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [pickedLocations, setPickedLocations] = useState<LocationModel[]>([])
+    const [tripName, setTripName] = useState<string>();
 
     const createMarker = (coords: Coords) => {
         return (
@@ -46,6 +47,8 @@ export const CreateTravelEntryPage = () => {
                         id="inputTripName"
                         aria-describedby="passwordHelpBlock"
                         placeholder={'Enter travel entry name'}
+                        value={tripName ?? ''}
+                        onChange={e => setTripName(e.currentTarget.value)}
                     />
 
                     <p>Pick locations by clicking on or touching the map</p>
@@ -57,7 +60,8 @@ export const CreateTravelEntryPage = () => {
                             ))
                         }
                     </VerticalContainer>
-                    <Button variant="primary">Save</Button>
+
+                    <Button variant="primary" disabled={!pickedLocations || !tripName}>Save</Button>
                 </div>
                 <div className="half-screen mobile-bottom">
                     <MapContainer accessToken={mapboxAccessToken} mapClickedHandler={onLocationPick} >

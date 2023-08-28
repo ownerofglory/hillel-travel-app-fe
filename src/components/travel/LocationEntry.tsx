@@ -1,7 +1,7 @@
 import {Button, Card } from "react-bootstrap";
 import React, {ChangeEvent, useRef, useState} from "react";
 import {LocationEntryProps} from "../../props/locationEntryProps";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import placeHolderImage from '../../assets/image-placeholder.png'
 import './localtion-style.css'
@@ -51,6 +51,9 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({location}) => {
                                 {geoUtil.formatCoords({...location})}
                             </Button>
                         </Card.Text>
+                        <Button variant={'outline-light'}>
+                            <FontAwesomeIcon icon={faTrashCan} />
+                        </Button>
                     </div>
                 </div>
             </Card.Body>

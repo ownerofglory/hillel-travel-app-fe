@@ -3,7 +3,7 @@
     min-width: 50vw;
 }
 
-.vertical-container {
+.vertical-location-container {
     max-height: 68vh;
 }
 
@@ -40,7 +40,7 @@
         min-height: 40vh;
     }
 
-    .vertical-container {
+    .vertical-location-container {
         max-height: 28vh;
     }
 
