@@ -12,6 +12,10 @@ export const TravelEntry: React.FC<TravelEntryProps> = ({travelEntry, showLocati
         showLocationsHandler(travelEntry.locations)
     }
 
+    const onViewClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+    }
+
     return (
         <div className={'travel-entry'}>
             <Card onClick={e => onTripClicked()}>
@@ -29,7 +33,7 @@ export const TravelEntry: React.FC<TravelEntryProps> = ({travelEntry, showLocati
                         </Card.Text>
                     </div>
                     <div className="travel-entry-bottom">
-                        <Button variant="primary">View</Button>
+                        <Button variant="primary" onClick={onViewClick}>View</Button>
 
                         <div className={'reaction-button-container'}>
                             <Button className={'reaction-button'} variant="outline-light">
