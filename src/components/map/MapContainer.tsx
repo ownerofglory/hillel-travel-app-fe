@@ -1,4 +1,5 @@
 import {
+    LngLatBounds,
     Map,
     MapboxEvent,
     MapLayerMouseEvent,
@@ -31,7 +32,25 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
     const [coords, setCoords] = useState(DEFAULT_COORDS);
     const initViewState = {...coords, zoom: zoom}
 
-    const onMapLoad = (e: MapboxEvent) => {
+    const boundsToBoundingBox = (bounds: LngLatBounds): BoundingBox => {
+        const bbox: BoundingBox = {northEast: {
+                longitude: bounds.getNorthEast().lng,
+                latitude: bounds.getNorthEast().lat
+            }, southWest: {
+                longitude: bounds.getSouthWest().lng,
+                latitude: bounds.getSouthWest().lat
+            }
+        }
+
+        return bbox
+    }
+
+    const onMapLoad = async (e: MapboxEvent) => {
+        const bounds = e.target.getBounds()
+        const bbox: BoundingBox = boundsToBoundingBox(bounds)
+
+        await onBoundingBoxChange(bbox)
+
         e.target.loadImage(markerIcon, (error, image) => {
             if (!error) {
                 e.target.addImage('map-location-marker', image!)
@@ -42,7 +61,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
     }
 
     const onBoundingBoxChange = async (boundingBox: BoundingBox) => {
-        if (boundingBoxChangeHandler) {
+        if (boundingBoxChangeHandler && (zoom >= 9)) {
             await boundingBoxChangeHandler(boundingBox)
         }
     }
@@ -51,14 +70,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
         if (e.type == 'moveend' || e.type == 'zoomend') {
             const bounds = e.target.getBounds()
 
-            const bbox: BoundingBox = {northEast: {
-                    longitude: bounds.getNorthEast().lng,
-                    latitude: bounds.getNorthEast().lat
-                }, southWest: {
-                    longitude: bounds.getSouthWest().lng,
-                    latitude: bounds.getSouthWest().lat
-                }
-            }
+            const bbox: BoundingBox = boundsToBoundingBox(bounds)
             return await onBoundingBoxChange(bbox)
         }
 
@@ -79,6 +91,11 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
         }
     }
 
+    const onMapZoom = (e: ViewStateChangeEvent) => {
+        const {zoom} = e.viewState
+        setZoom(zoom)
+    }
+
     return (
         <div className="map-container">
             <Map mapboxAccessToken={accessToken}
@@ -90,6 +107,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
                  onMoveEnd={onMapMoveEnd}
                  onClick={onMapClicked}
                  onTouchEnd={onMapTouchEnded}
+                 onZoom={onMapZoom}
             >
                 <AddTripControl />
                 <VerticalControlContainer>
