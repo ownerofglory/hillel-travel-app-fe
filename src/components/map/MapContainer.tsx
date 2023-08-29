@@ -16,6 +16,7 @@ import {VerticalControlContainer} from "./controls/VerticalControlContainer";
 import {AddTripControl} from "./controls/AddTripControl";
 import markerIcon from '../../assets/map-marker.png'
 import {BoundingBox} from "../../models/boundingBox";
+import {geoUtil} from "../../utils/geoUtil";
 
 
 const DEFAULT_COORDS: Coords = {longitude: 9.2, latitude: 48.75}
@@ -32,22 +33,9 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
     const [coords, setCoords] = useState(DEFAULT_COORDS);
     const initViewState = {...coords, zoom: zoom}
 
-    const boundsToBoundingBox = (bounds: LngLatBounds): BoundingBox => {
-        const bbox: BoundingBox = {northEast: {
-                longitude: bounds.getNorthEast().lng,
-                latitude: bounds.getNorthEast().lat
-            }, southWest: {
-                longitude: bounds.getSouthWest().lng,
-                latitude: bounds.getSouthWest().lat
-            }
-        }
-
-        return bbox
-    }
-
     const onMapLoad = async (e: MapboxEvent) => {
         const bounds = e.target.getBounds()
-        const bbox: BoundingBox = boundsToBoundingBox(bounds)
+        const bbox: BoundingBox = geoUtil.boundsToBoundingBox(bounds)
 
         await onBoundingBoxChange(bbox)
 
@@ -70,7 +58,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
         if (e.type == 'moveend' || e.type == 'zoomend') {
             const bounds = e.target.getBounds()
 
-            const bbox: BoundingBox = boundsToBoundingBox(bounds)
+            const bbox: BoundingBox = geoUtil.boundsToBoundingBox(bounds)
             return await onBoundingBoxChange(bbox)
         }
 

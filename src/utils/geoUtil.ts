@@ -1,5 +1,7 @@
 import {LocationModel} from "../models/locationModel";
 import {Coords} from "../models/coords";
+import {LngLatBounds} from "react-map-gl";
+import {BoundingBox} from "../models/boundingBox";
 
 const locationToPoint = (location: LocationModel): GeoJSON.Feature<GeoJSON.Geometry> => {
     const geo: GeoJSON.Point = {
@@ -61,9 +63,23 @@ const formatCoords = (coords: Coords): string => {
     return `${formatSingleCoord(coords.longitude, false)}  ${formatSingleCoord(coords.latitude, true)}`;
 }
 
+const boundsToBoundingBox = (bounds: LngLatBounds): BoundingBox => {
+    const bbox: BoundingBox = {northEast: {
+            longitude: bounds.getNorthEast().lng,
+            latitude: bounds.getNorthEast().lat
+        }, southWest: {
+            longitude: bounds.getSouthWest().lng,
+            latitude: bounds.getSouthWest().lat
+        }
+    }
+
+    return bbox
+}
+
 export const geoUtil = {
     locationToPoint: locationToPoint,
     locationsToFeatureCollection: locationsToFeatureCollection,
     locationsToBoundingBox: locationsToBoundingBox,
-    formatCoords: formatCoords
+    formatCoords: formatCoords,
+    boundsToBoundingBox: boundsToBoundingBox
 }
