@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: row;
     overflow: scroll;
+    background: radial-gradient(#372c2c, #292a33)!important;
 }
 
 .mobile-top {

@@ -6,6 +6,12 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    box-shadow: 3px 3px 4px #1b1b1c;
+}
+
+.travel-entry .card:hover {
+    box-shadow: none;
+    background-color: #5555558f;
 }
 
 .travel-title-desktop {
@@ -16,10 +22,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-}
-
-.travel-entry .card .card-body:hover {
-    background-color: #5555558f;
 }
 
 .travel-entry .card img {
