@@ -6,4 +6,6 @@ export interface TravelEntryModel {
     description: string | ''
     locations: LocationModel[],
     createdAt?: Date
+    likeCount?: number
+    commentCount?: number
 }
