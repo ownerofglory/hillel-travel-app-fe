@@ -21,7 +21,7 @@ export const StyleControl: React.FC<StyleControlProps> = ({styleChangehandler}) 
                 styleChangehandler('mapbox://styles/mapbox/outdoors-v12')
                 break
             case 'satellite':
-                styleChangehandler('mapbox://styles/mapbox/satellite-v9')
+                styleChangehandler('mapbox://styles/mapbox/satellite-streets-v12')
                 break
         }
     }
