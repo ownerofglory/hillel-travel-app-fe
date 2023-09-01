@@ -17,6 +17,8 @@ import {AddTripControl} from "./controls/AddTripControl";
 import markerIcon from '../../assets/map-marker.png'
 import {BoundingBox} from "../../models/boundingBox";
 import {geoUtil} from "../../utils/geoUtil";
+import {StyleControl} from "./controls/StyleControl";
+import mapboxgl from "mapbox-gl";
 
 
 const DEFAULT_COORDS: Coords = {longitude: 9.2, latitude: 48.75}
@@ -31,9 +33,12 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
 
     const [zoom, setZoom] = useState(DEFAULT_ZOOM)
     const [coords, setCoords] = useState(DEFAULT_COORDS);
+    const [map, setMap] = useState<mapboxgl.Map>()
     const initViewState = {...coords, zoom: zoom}
 
     const onMapLoad = async (e: MapboxEvent) => {
+        setMap(e.target)
+
         const bounds = e.target.getBounds()
         const bbox: BoundingBox = geoUtil.boundsToBoundingBox(bounds)
 
@@ -84,12 +89,17 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
         setZoom(zoom)
     }
 
+    const onStyleChange = (style: string) => {
+        map?.setStyle(style)
+    }
+
     return (
         <div className="map-container">
             <Map mapboxAccessToken={accessToken}
                  initialViewState={initViewState}
                  style={style ?? DEFAULT_MAP_STYLE}
-                 mapStyle={'mapbox://styles/mapbox/outdoors-v12'}
+                 mapStyle={'mapbox://styles/mapbox/outdoors-v12'} // "mapbox-gl": "^2.15.0",
+                 // mapStyle={'mapbox://styles/mapbox/standard-beta'} // "mapbox-gl": "^3.0.0-beta.1",
                  attributionControl={false}
                  onLoad={onMapLoad}
                  onMoveEnd={onMapMoveEnd}
@@ -101,6 +111,7 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
                 <VerticalControlContainer>
                     <CurrentLocationControl />
                     <ZoomControl/>
+                    <StyleControl styleChangehandler={onStyleChange}/>
                 </VerticalControlContainer>
                 {children}
             </Map>
