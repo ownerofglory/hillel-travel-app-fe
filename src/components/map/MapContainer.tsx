@@ -36,8 +36,20 @@ export const MapContainer: React.FC<MapContainerProps> = ({accessToken,
     const [map, setMap] = useState<mapboxgl.Map>()
     const initViewState = {...coords, zoom: zoom}
 
+    const onGetLocationSuccess = (position: GeolocationPosition) => {
+        const {coords} = position
+        setCoords(coords)
+        map!.flyTo({center: [coords.longitude, coords.latitude] })
+    }
+
+    const onGetLocationError = (error: GeolocationPositionError) => {
+        console.error('Unable to get current geo position', error)
+    }
+
     const onMapLoad = async (e: MapboxEvent) => {
         setMap(e.target)
+
+        geoUtil.getCurrentLocation(onGetLocationSuccess, onGetLocationError)
 
         const bounds = e.target.getBounds()
         const bbox: BoundingBox = geoUtil.boundsToBoundingBox(bounds)

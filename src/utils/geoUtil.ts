@@ -76,10 +76,15 @@ const boundsToBoundingBox = (bounds: LngLatBounds): BoundingBox => {
     return bbox
 }
 
+const getCurrentLocation = (onSuccess: PositionCallback, onError: PositionErrorCallback) => {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError)
+}
+
 export const geoUtil = {
     locationToPoint: locationToPoint,
     locationsToFeatureCollection: locationsToFeatureCollection,
     locationsToBoundingBox: locationsToBoundingBox,
     formatCoords: formatCoords,
-    boundsToBoundingBox: boundsToBoundingBox
+    boundsToBoundingBox: boundsToBoundingBox,
+    getCurrentLocation: getCurrentLocation
 }
