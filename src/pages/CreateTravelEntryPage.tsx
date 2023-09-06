@@ -8,6 +8,8 @@ import {LocationModel} from "../models/locationModel";
 import {LocationEntry} from "../components/travel/LocationEntry";
 import './create-travel-page-style.css'
 import {Button, Form } from "react-bootstrap";
+import constants from '../constants/appConstants'
+import {TravelEntryModel} from "../models/travelEntry";
 
 export const CreateTravelEntryPage = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
@@ -32,6 +34,26 @@ export const CreateTravelEntryPage = () => {
         setPickedLocations(newLocations)
 
         return new Promise<any>(resolve => {})
+    }
+
+    const createButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const trip: TravelEntryModel = {
+            title: tripName ?? `Trip-${new Date().toLocaleTimeString()}`,
+            description: '',
+            locations: pickedLocations
+        }
+
+        fetch(constants.baseUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(trip)
+        }).then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+        }).then(data => console.log(data))
     }
 
     return (
@@ -62,7 +84,7 @@ export const CreateTravelEntryPage = () => {
                     </VerticalContainer>
 
 
-                    <Button variant="primary" disabled={!pickedLocations || !tripName}>Save</Button>
+                    <Button variant="primary" onClick={createButtonClick} disabled={!pickedLocations || !tripName}>Save</Button>
                 </div>
                 <div className="half-screen mobile-bottom">
                     <MapContainer accessToken={mapboxAccessToken} mapClickedHandler={onLocationPick} >
