@@ -3,7 +3,6 @@ import React from "react";
 import {GenericProps} from "../../../props/genericProps";
 import {LikeTooltip} from "./LikeTooltip";
 import {LikeModel} from "../../../models/likeModel";
-import {LikeTooltipProps} from "../../../props/likeTooltipProps";
 
 export const LikeTooltipOverlay: React.FC<GenericProps> = ({children}) => {
     const likes: LikeModel[] = [
