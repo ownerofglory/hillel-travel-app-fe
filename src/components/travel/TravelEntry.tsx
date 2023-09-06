@@ -34,7 +34,7 @@ export const TravelEntry: React.FC<TravelEntryProps> = ({travelEntry, showLocati
                         </Card.Text>
                     </div>
                     <div className="travel-entry-bottom">
-                        <Button variant="primary" onClick={onViewClick}>View</Button>
+                        <Button variant="primary" type={'button'} onClick={onViewClick}>View</Button>
 
                         <div className={'reaction-button-container'}>
                             <LikeTooltipOverlay>

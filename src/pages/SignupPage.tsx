@@ -1,7 +1,8 @@
 import {Navigation} from "../components/common/Navigation";
 import React from "react";
+import {PageProps} from "../props/pageProps";
 
-export const SignupPage = () => {
+export const SignupPage: React.FC<PageProps> = () => {
     return (
         <div>
             <Navigation loggedIn={false}/>

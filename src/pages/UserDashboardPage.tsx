@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './user-dashboard-style.css'
 import {Navigation} from "../components/common/Navigation";
 import {MapContainer} from "../components/map/MapContainer";
@@ -8,16 +8,25 @@ import data from "../mockData"
 import {LocationModel} from "../models/locationModel";
 import {LocationsSource} from "../components/map/sources/LocationsSource";
 import {LocationsLayer} from "../components/map/layers/LocationsLayer";
+import {PageProps} from "../props/pageProps";
+import useAuth from "../hooks/useAuth";
 
-export const UserDashboardPage = () => {
+export const UserDashboardPage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [travelEntries, setTravelEntries] = useState(data.travelEntries)
     const [locations, setLocations] = useState<LocationModel[]>();
+    const auth = useAuth()
+    useEffect(() => {
+        console.log('Auth changed:', auth);
+    }, [auth]);
+
 
     const showLocationsOnMap = (locations: LocationModel[]) => {
         console.log('Show locations', locations)
         setLocations(locations)
     }
+
+    console.log(auth)
 
     return (
         <div>

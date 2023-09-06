@@ -7,8 +7,9 @@ import {LocationModel} from "../models/locationModel";
 import {LocationExploreMarker} from "../components/map/markers/LocationExploreMarker";
 import mockUtil from "../utils/mockUtil";
 import {LocationExplorePopup} from "../components/map/popups/LocationExplorePopup";
+import {PageProps} from "../props/pageProps";
 
-export const ExplorePage = () => {
+export const ExplorePage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [locations, setLocations] = useState<LocationModel[]>([]);
     const [showPopup, setShowPopup] = useState(false)

@@ -10,8 +10,9 @@ import './create-travel-page-style.css'
 import {Button, Form } from "react-bootstrap";
 import constants from '../constants/appConstants'
 import {TravelEntryModel} from "../models/travelEntry";
+import {PageProps} from "../props/pageProps";
 
-export const CreateTravelEntryPage = () => {
+export const CreateTravelEntryPage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [pickedLocations, setPickedLocations] = useState<LocationModel[]>([])
     const [tripName, setTripName] = useState<string>();
