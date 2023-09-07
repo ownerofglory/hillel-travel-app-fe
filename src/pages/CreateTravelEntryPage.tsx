@@ -8,14 +8,19 @@ import {LocationModel} from "../models/locationModel";
 import {LocationEntry} from "../components/travel/LocationEntry";
 import './create-travel-page-style.css'
 import {Button, Form } from "react-bootstrap";
-import constants from '../constants/appConstants'
 import {TravelEntryModel} from "../models/travelEntry";
 import {PageProps} from "../props/pageProps";
+import useAuth from "../hooks/useAuth";
+import {useNavigate} from "react-router-dom";
+import appConstants from "../constants/appConstants";
 
 export const CreateTravelEntryPage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [pickedLocations, setPickedLocations] = useState<LocationModel[]>([])
     const [tripName, setTripName] = useState<string>();
+    const [tripDescription, setTripDescription] = useState<string>();
+    const {auth} = useAuth()
+    const navigate = useNavigate()
 
     const createMarker = (coords: Coords) => {
         return (
@@ -40,11 +45,12 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
     const createButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const trip: TravelEntryModel = {
             title: tripName ?? `Trip-${new Date().toLocaleTimeString()}`,
-            description: '',
+            description: tripDescription ?? '',
+            userId: auth?.user?.id,
             locations: pickedLocations
         }
 
-        fetch(constants.baseUrl, {
+        fetch(`${appConstants.baseUrl}/travelEntries`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,7 +60,14 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
             if (res.ok) {
                 return res.json()
             }
-        }).then(data => console.log(data))
+            return res.json().then(err => {
+                    throw new Error(err.message || res.statusText);
+                }).catch(() => {
+                    // If error parsing JSON, default to statusText
+                    throw new Error(res.statusText);
+                });
+        }).then(trip => navigate('/dashboard'))
+            .catch(e => console.log(e.message))
     }
 
     return (
@@ -68,10 +81,18 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
                     <Form.Control
                         type="text"
                         id="inputTripName"
-                        aria-describedby="passwordHelpBlock"
                         placeholder={'Enter travel entry name'}
                         value={tripName ?? ''}
                         onChange={e => setTripName(e.currentTarget.value)}
+                    />
+                    <Form.Control
+                        type="text"
+                        id="inputTripDescription"
+                        as="textarea"
+                        rows={2}
+                        placeholder={'Enter travel description'}
+                        value={tripDescription ?? ''}
+                        onChange={e => setTripDescription(e.currentTarget.value)}
                     />
 
                     <p>Pick locations by clicking on or touching the map</p>

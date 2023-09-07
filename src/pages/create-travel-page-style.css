@@ -19,7 +19,7 @@
     padding: 20px;
 }
 
-.content-container input, p, h2 {
+.content-container input, p, h2, textarea {
     margin-bottom: 20px;
 }
 

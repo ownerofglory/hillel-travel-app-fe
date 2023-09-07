@@ -7,5 +7,6 @@ export interface TravelEntryModel {
     locations: LocationModel[],
     createdAt?: Date
     likeCount?: number
+    userId?: number | undefined
     commentCount?: number
 }
