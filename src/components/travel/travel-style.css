@@ -9,6 +9,10 @@
     box-shadow: 3px 3px 4px #1b1b1c;
 }
 
+.cardtext {
+    max-width: 320px;
+}
+
 .travel-entry .card:hover {
     box-shadow: none;
     background-color: #5555558f;

@@ -8,12 +8,14 @@ import {LocationExploreMarker} from "../components/map/markers/LocationExploreMa
 import mockUtil from "../utils/mockUtil";
 import {LocationExplorePopup} from "../components/map/popups/LocationExplorePopup";
 import {PageProps} from "../props/pageProps";
+import useAuth from "../hooks/useAuth";
 
 export const ExplorePage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
     const [locations, setLocations] = useState<LocationModel[]>([]);
     const [showPopup, setShowPopup] = useState(false)
     const [chosenLocation, setChosenLocation] = useState<LocationModel>()
+    const {auth} = useAuth()
 
     const onBoundingBoxChanged = (bbox: BoundingBox): Promise<any> => {
         const mockLocations = mockUtil.generateMockLocations(bbox)
@@ -51,20 +53,27 @@ export const ExplorePage: React.FC<PageProps> = () => {
 
     return (
         <div>
-            <Navigation loggedIn={true} />
-            <div className="full-screen-map">
-                <MapContainer accessToken={mapboxAccessToken}
-                              style={{height: '90vh'}}
-                              boundingBoxChangeHandler={onBoundingBoxChanged}
-                >
-                    {
-                        showPopup ? createLocationPopup(chosenLocation!) : (<div></div>)
-                    }
-                    {
-                        locations.map(createExploreMarker)
-                    }
-                </MapContainer>
-            </div>
+            <Navigation loggedIn={!!auth} />
+            {
+                auth ? (
+                    <div className="full-screen-map">
+                        <MapContainer accessToken={mapboxAccessToken}
+                                      style={{height: '90vh'}}
+                                      boundingBoxChangeHandler={onBoundingBoxChanged}
+                        >
+                            {
+                                showPopup ? createLocationPopup(chosenLocation!) : (<div></div>)
+                            }
+                            {
+                                locations.map(createExploreMarker)
+                            }
+                        </MapContainer>
+                    </div>
+                ): (
+                    <div></div>
+                )
+            }
+
         </div>
     );
 };

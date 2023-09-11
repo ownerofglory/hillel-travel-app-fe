@@ -11,7 +11,7 @@ import useAuth from "../hooks/useAuth";
 export const LoginPage: React.FC<LoginPageProps> = () => {
     const [loginItem, setLoginItem] = useState<LoginModel>({})
     const navigate = useNavigate()
-    const {setAuth} = useAuth()
+    const {auth, setAuth} = useAuth()
 
     const onUsernameInput = (e: ChangeEvent<HTMLInputElement>) => {
         const username = e.target.value
@@ -29,7 +29,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
     }
 
     const onLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const auth: AuthModel = {token: 'token', user: {name: 'user', email: 'ee@ee.com'}}
+        const auth: AuthModel = {token: 'token', user: {id: 1, name: 'user', email: 'ee@ee.com'}}
         setAuth(auth)
         localStorage.setItem('auth', JSON.stringify(auth))
         navigate('/dashboard')
@@ -37,7 +37,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
 
     return (
         <div>
-            <Navigation loggedIn={false}/>
+            <Navigation loggedIn={!!auth}/>
 
             <div className="page-centered">
                 <Form>

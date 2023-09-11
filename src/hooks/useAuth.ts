@@ -1,5 +1,4 @@
 import {createContext, useContext} from "react";
-import {AuthContextProps} from "../props/authContextProps";
 import AuthContext from "../context/authContext";
 
 

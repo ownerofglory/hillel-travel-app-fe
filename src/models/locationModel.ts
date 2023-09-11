@@ -5,4 +5,5 @@ export interface LocationModel {
     latitude: number,
     locationName: string | ''
     travelEntry?: TravelEntryModel
+    imageUrl?: string
 }

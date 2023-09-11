@@ -6,13 +6,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import placeHolderImage from '../../assets/image-placeholder.png'
 import './localtion-style.css'
 import {geoUtil} from "../../utils/geoUtil";
+import {read} from "fs";
+import appConstants from "../../constants/appConstants";
+import {FileUploadResult} from "../../models/fileUploadResult";
 
-export const LocationEntry: React.FC<LocationEntryProps> = ({location}) => {
+export const LocationEntry: React.FC<LocationEntryProps> = ({location, locationChangeHandler}) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imgSrc, setImgSrc] = useState(placeHolderImage);
 
     const handleImageClick = () => {
         fileInputRef.current?.click(); // Trigger the hidden file input
+    }
+
+    const uploadImage = async () => {
+        if (!fileInputRef.current?.files?.length) {
+            return; // No file chosen
+        }
+
+        const file = fileInputRef.current.files[0];
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('name', `image${new Date().getMilliseconds()}-${Math.floor(Math.random() * 100)}${file.name}`);
+
+        try {
+            const response = await fetch(`${appConstants.baseUrl}/upload`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Server responded with a non-OK status");
+            }
+
+            const responseData = await response.json();
+            return responseData
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
     }
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +52,11 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({location}) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImgSrc(reader.result as string); // Update the displayed image
+                uploadImage().then((data: FileUploadResult) => {
+                    setImgSrc(data.fileUrl)
+
+                    locationChangeHandler({...location, imageUrl: data.fileUrl})
+                })
             }
             reader.readAsDataURL(file);
         }

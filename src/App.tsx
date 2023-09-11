@@ -16,8 +16,11 @@ export const AuthProvider: React.FC<GenericProps> = ({ children }) => {
 
     useEffect(() => {
         if (!auth) {
-            const presentAuth = JSON.parse(localStorage.getItem('auth') ?? '{}')
-            setAuth(presentAuth)
+            const localAuth =  localStorage.getItem('auth')
+            if (localAuth) {
+                const presentAuth = JSON.parse(localAuth)
+                setAuth(presentAuth)
+            }
         }
     }, []);
 

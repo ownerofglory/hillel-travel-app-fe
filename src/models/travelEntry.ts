@@ -8,5 +8,6 @@ export interface TravelEntryModel {
     createdAt?: Date
     likeCount?: number
     userId?: number | undefined
-    commentCount?: number
+    commentCount?: number,
+    imageUrl?: string
 }

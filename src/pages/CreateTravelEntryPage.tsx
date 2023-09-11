@@ -47,7 +47,8 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
             title: tripName ?? `Trip-${new Date().toLocaleTimeString()}`,
             description: tripDescription ?? '',
             userId: auth?.user?.id,
-            locations: pickedLocations
+            locations: pickedLocations,
+            imageUrl: pickedLocations.find(location => !!location.imageUrl)?.imageUrl ?? 'https://livingecuadortravel.com/wp-content/uploads/2023/01/placeholder-2.png'
         }
 
         fetch(`${appConstants.baseUrl}/travelEntries`, {
@@ -63,59 +64,81 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
             return res.json().then(err => {
                     throw new Error(err.message || res.statusText);
                 }).catch(() => {
-                    // If error parsing JSON, default to statusText
                     throw new Error(res.statusText);
                 });
         }).then(trip => navigate('/dashboard'))
             .catch(e => console.log(e.message))
     }
 
+    const onLocationChange = (location: LocationModel) => {
+        console.log('Location change', location)
+        pickedLocations.forEach(loc => {
+            if (loc.longitude == location.longitude && loc.latitude == location.latitude) {
+                loc.locationName = location.locationName
+                loc.imageUrl = location.imageUrl
+            }
+        })
+
+        console.log(pickedLocations)
+
+        setPickedLocations(pickedLocations)
+    }
+
     return (
         <div>
-            <Navigation loggedIn={true} />
+            <Navigation loggedIn={!!auth} />
 
-            <div className="flex-container-hor flex-container-ver">
-                <div className="half-screen mobile-top content-container">
-                    <h2>Create a travel entry</h2>
+            {
+                auth ? (
+                    <div className="flex-container-hor flex-container-ver">
+                        <div className="half-screen mobile-top content-container">
+                            <h2>Create a travel entry</h2>
 
-                    <Form.Control
-                        type="text"
-                        id="inputTripName"
-                        placeholder={'Enter travel entry name'}
-                        value={tripName ?? ''}
-                        onChange={e => setTripName(e.currentTarget.value)}
-                    />
-                    <Form.Control
-                        type="text"
-                        id="inputTripDescription"
-                        as="textarea"
-                        rows={2}
-                        placeholder={'Enter travel description'}
-                        value={tripDescription ?? ''}
-                        onChange={e => setTripDescription(e.currentTarget.value)}
-                    />
+                            <Form.Control
+                                type="text"
+                                id="inputTripName"
+                                placeholder={'Enter travel entry name'}
+                                value={tripName ?? ''}
+                                onChange={e => setTripName(e.currentTarget.value)}
+                            />
+                            <Form.Control
+                                type="text"
+                                id="inputTripDescription"
+                                as="textarea"
+                                rows={2}
+                                placeholder={'Enter travel description'}
+                                value={tripDescription ?? ''}
+                                onChange={e => setTripDescription(e.currentTarget.value)}
+                            />
 
-                    <p>Pick locations by clicking on or touching the map</p>
+                            <p>Pick locations by clicking on or touching the map</p>
 
-                    <VerticalContainer>
-                        {
-                            pickedLocations.map(loc => (
-                                <LocationEntry key={`${loc.latitude}-${loc.longitude}`}  location={loc}/>
-                            ))
-                        }
-                    </VerticalContainer>
+                            <VerticalContainer>
+                                {
+                                    pickedLocations.map(loc => (
+                                        <LocationEntry key={`${loc.latitude}-${loc.longitude}`}
+                                                       location={loc}
+                                                       locationChangeHandler={onLocationChange}/>
+                                    ))
+                                }
+                            </VerticalContainer>
 
 
-                    <Button variant="primary" onClick={createButtonClick} disabled={!pickedLocations || !tripName}>Save</Button>
-                </div>
-                <div className="half-screen mobile-bottom">
-                    <MapContainer accessToken={mapboxAccessToken} mapClickedHandler={onLocationPick} >
-                        {
-                            pickedLocations.map(createMarker)
-                        }
-                    </MapContainer>
-                </div>
-            </div>
+                            <Button variant="primary" onClick={createButtonClick} disabled={!pickedLocations || !tripName}>Save</Button>
+                        </div>
+                        <div className="half-screen mobile-bottom">
+                            <MapContainer accessToken={mapboxAccessToken} mapClickedHandler={onLocationPick} >
+                                {
+                                    pickedLocations.map(createMarker)
+                                }
+                            </MapContainer>
+                        </div>
+                    </div>
+                ) : (
+                    <div></div>
+                )
+            }
+
         </div>
     );
 };
