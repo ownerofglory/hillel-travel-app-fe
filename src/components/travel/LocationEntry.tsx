@@ -10,12 +10,19 @@ import {read} from "fs";
 import appConstants from "../../constants/appConstants";
 import {FileUploadResult} from "../../models/fileUploadResult";
 
-export const LocationEntry: React.FC<LocationEntryProps> = ({location, locationChangeHandler}) => {
+export const LocationEntry: React.FC<LocationEntryProps> = ({
+                                                                location,
+                                                                locationChangeHandler,
+                                                                removable,
+                                                                editable
+}) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [imgSrc, setImgSrc] = useState(placeHolderImage);
+    const [imgSrc, setImgSrc] = useState<string>(location.imageUrl ?? placeHolderImage);
 
     const handleImageClick = () => {
-        fileInputRef.current?.click(); // Trigger the hidden file input
+        if (editable) {
+            fileInputRef.current?.click();
+        }
     }
 
     const uploadImage = async () => {
@@ -54,8 +61,9 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({location, locationC
                 setImgSrc(reader.result as string); // Update the displayed image
                 uploadImage().then((data: FileUploadResult) => {
                     setImgSrc(data.fileUrl)
-
-                    locationChangeHandler({...location, imageUrl: data.fileUrl})
+                    if (locationChangeHandler) {
+                        locationChangeHandler({...location, imageUrl: data.fileUrl})
+                    }
                 })
             }
             reader.readAsDataURL(file);
@@ -87,9 +95,13 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({location, locationC
                                 {geoUtil.formatCoords({...location})}
                             </Button>
                         </Card.Text>
-                        <Button variant={'outline-light'}>
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </Button>
+                        {
+                            removable ? (
+                                <Button variant={'outline-light'}>
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                </Button>
+                            ): (<div></div>)
+                        }
                     </div>
                 </div>
             </Card.Body>

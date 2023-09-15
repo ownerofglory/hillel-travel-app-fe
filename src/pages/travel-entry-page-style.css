@@ -1,0 +1,63 @@
+.half-screen {
+    min-height: 90vh;
+    min-width: 50vw;
+}
+
+.flex-container-hor {
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
+    background: radial-gradient(#372c2c, #292a33)!important;
+}
+
+.mobile-top {
+    min-height: auto;
+}
+
+.vertical-location-container {
+    max-height: 68vh;
+}
+
+.vertical-scroll-container .card {
+    margin-bottom: 20px;
+}
+
+.vertical-scroll-container :last-child {
+    margin-bottom: 0;
+}
+
+.content-container {
+    padding: 20px;
+}
+
+.content-container input, p, h2, textarea {
+    margin-bottom: 20px;
+}
+
+.content-container .vertical-container {
+    padding: 20px;
+}
+
+@media (max-width: 480px) {
+    .flex-container-ver {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .half-screen {
+        min-height: 40vh;
+    }
+
+    .mobile-top {
+        min-height: 45vh;
+    }
+
+    .mobile-bottom {
+        min-height: 40vh;
+    }
+
+    .vertical-location-container {
+        max-height: 28vh;
+    }
+
+}

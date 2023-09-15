@@ -10,6 +10,7 @@ import {ExplorePage} from "./pages/ExplorePage";
 import {AuthModel} from "./models/authModel";
 import {GenericProps} from "./props/genericProps";
 import AuthContext from './context/authContext';
+import {TravelEntryPage} from "./pages/TravelEntryPage";
 
 export const AuthProvider: React.FC<GenericProps> = ({ children }) => {
     const [auth, setAuth] = useState<AuthModel | undefined>(undefined);
@@ -43,6 +44,7 @@ function App() {
                    <Route path="/dashboard" element={ <UserDashboardPage  /> } />
                    <Route path="/create-trip" element={ <CreateTravelEntryPage  /> } />
                    <Route path="/explore" element={ <ExplorePage  /> } />
+                   <Route path="/trip/:id" element={ <TravelEntryPage  /> } />
                </Routes>
            </BrowserRouter>
        </div>

@@ -117,6 +117,8 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
                                 {
                                     pickedLocations.map(loc => (
                                         <LocationEntry key={`${loc.latitude}-${loc.longitude}`}
+                                                       removable={true}
+                                                       editable={true}
                                                        location={loc}
                                                        locationChangeHandler={onLocationChange}/>
                                     ))

@@ -55,26 +55,26 @@ export const UserDashboardPage: React.FC<PageProps> = () => {
 
             {auth ? (
                 <div className="flex-container-hor flex-container-ver">
-                <div className="half-screen mobile-top">
-                    <h2>Your trips</h2>
-                    <VerticalContainer>
-                        {
-                            travelEntries.map(entry => (
-                                <TravelEntry travelEntry={entry}
-                                             key={entry.id}
-                                             showLocationsHandler={showLocationsOnMap} />
-                            ))
-                        }
-                    </VerticalContainer>
+                    <div className="half-screen mobile-top">
+                        <h2>Your trips</h2>
+                        <VerticalContainer>
+                            {
+                                travelEntries.map(entry => (
+                                    <TravelEntry travelEntry={entry}
+                                                 key={entry.id}
+                                                 showLocationsHandler={showLocationsOnMap} />
+                                ))
+                            }
+                        </VerticalContainer>
+                    </div>
+                    <div className="half-screen mobile-bottom">
+                        <MapContainer accessToken={mapboxAccessToken} >
+                            <LocationsSource locations={locations}>
+                                <LocationsLayer />
+                            </LocationsSource>
+                        </MapContainer>
+                    </div>
                 </div>
-                <div className="half-screen mobile-bottom">
-                    <MapContainer accessToken={mapboxAccessToken} >
-                        <LocationsSource locations={locations}>
-                            <LocationsLayer />
-                        </LocationsSource>
-                    </MapContainer>
-                </div>
-            </div>
                 ): (
                     <div></div>
                 )
