@@ -54,7 +54,8 @@ export const CreateTravelEntryPage: React.FC<PageProps> = () => {
         fetch(`${appConstants.baseUrl}/travelEntries`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth?.token}`
             },
             body: JSON.stringify(trip)
         }).then(res => {

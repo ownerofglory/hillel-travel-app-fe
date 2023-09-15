@@ -16,7 +16,13 @@ export const TravelEntryPage = () => {
     const [travelEntry, setTravelEntry] = useState<TravelEntryModel>()
 
     const getTravelEntry = (id: number) => {
-        return fetch(`${appConstants.baseUrl}/travelEntries/${id}`)
+        return fetch(`${appConstants.baseUrl}/travelEntries/${id}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${auth?.token}`
+                }
+            })
             .then(res => {
                 if (res.ok) {
                     return res.json()

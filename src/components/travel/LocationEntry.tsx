@@ -9,6 +9,7 @@ import {geoUtil} from "../../utils/geoUtil";
 import {read} from "fs";
 import appConstants from "../../constants/appConstants";
 import {FileUploadResult} from "../../models/fileUploadResult";
+import useAuth from "../../hooks/useAuth";
 
 export const LocationEntry: React.FC<LocationEntryProps> = ({
                                                                 location,
@@ -18,6 +19,7 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({
 }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imgSrc, setImgSrc] = useState<string>(location.imageUrl ?? placeHolderImage);
+    const {auth} = useAuth()
 
     const handleImageClick = () => {
         if (editable) {
@@ -39,7 +41,10 @@ export const LocationEntry: React.FC<LocationEntryProps> = ({
         try {
             const response = await fetch(`${appConstants.baseUrl}/upload`, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Authorization': `Bearer ${auth?.token}`
+                }
             });
 
             if (!response.ok) {

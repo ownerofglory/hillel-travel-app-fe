@@ -23,7 +23,12 @@ export const UserDashboardPage: React.FC<PageProps> = () => {
     const navigate = useNavigate()
 
     const getTravelEntries = (): Promise<TravelEntryModel[]> => {
-        return fetch(`${appConstants.baseUrl}/travelEntries/users?userId=${auth?.user.id}`)
+        return fetch(`${appConstants.baseUrl}/travelEntries/users?userId=${auth?.user.id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${auth?.token}`
+            }
+        })
             .then(res => {
                 if (res.ok) {
                     return res.json()

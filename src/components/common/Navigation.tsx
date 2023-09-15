@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {NavigationProps} from "../../props/navigationProps";
 import {Link} from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export const Navigation: React.FC<NavigationProps> = (props) => {
     const [loggedIn, setLoggedIn] = useState(props.loggedIn)
+    const {auth} = useAuth()
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -22,6 +24,9 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
                                 <Link className={'nav-link'} to={'/setting'}>Settings</Link>
                                 <Link className={'nav-link'} to={'/logout'}>Logout</Link>
                             </Nav>
+                            <Navbar.Text>
+                                <Link to={''}>{auth?.user.name}</Link>
+                            </Navbar.Text>
                         </Navbar.Collapse>
                     ) : (
                         <Navbar.Collapse id="responsive-navbar-nav">

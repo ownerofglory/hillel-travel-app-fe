@@ -1,17 +1,23 @@
 import {Navigation} from "../components/common/Navigation";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Button, Form } from "react-bootstrap";
 import './login-page-style.css'
 import {LoginModel} from "../models/loginModel";
 import {LoginPageProps} from "../props/loginPageProps";
-import {AuthModel} from "../models/authModel";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import appConstants from "../constants/appConstants";
 
 export const LoginPage: React.FC<LoginPageProps> = () => {
     const [loginItem, setLoginItem] = useState<LoginModel>({})
     const navigate = useNavigate()
     const {auth, setAuth} = useAuth()
+
+    useEffect(() => {
+        if (auth) {
+            navigate('/dashboard')
+        }
+    }, []);
 
     const onUsernameInput = (e: ChangeEvent<HTMLInputElement>) => {
         const username = e.target.value
@@ -29,10 +35,23 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
     }
 
     const onLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const auth: AuthModel = {token: 'token', user: {id: 1, name: 'user', email: 'ee@ee.com'}}
-        setAuth(auth)
-        localStorage.setItem('auth', JSON.stringify(auth))
-        navigate('/dashboard')
+        fetch(`${appConstants.baseUrl}/login`,
+            {
+                method: 'POST',
+                body: JSON.stringify(loginItem),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                if (res.ok) {
+                    return res.json()
+                }
+            }).then(data => {
+                setAuth(data)
+                localStorage.setItem('auth', JSON.stringify(data))
+                localStorage.setItem('jwt', data?.token ?? "")
+                navigate('/dashboard')
+            }).catch(err => console.log(err))
     }
 
     return (
@@ -41,6 +60,7 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
 
             <div className="page-centered">
                 <Form>
+                    <h1>Welcome</h1>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={onUsernameInput} />
@@ -54,8 +74,9 @@ export const LoginPage: React.FC<LoginPageProps> = () => {
                         <Form.Control type="password" placeholder="Password" onChange={onPasswordInput} />
                     </Form.Group>
                     <Button variant="primary" onClick={onLoginClick}>
-                        Submit
+                        Login
                     </Button>
+                    <p>Don't have an account yet? Register <Link to={'/signup'}>here :)</Link></p>
                 </Form>
             </div>
         </div>
