@@ -4,7 +4,6 @@ import {Navigation} from "../components/common/Navigation";
 import {MapContainer} from "../components/map/MapContainer";
 import {VerticalContainer} from "../components/verticalContainer/VerticalContainer";
 import {TravelEntry} from "../components/travel/TravelEntry";
-import data from "../mockData"
 import {LocationModel} from "../models/locationModel";
 import {LocationsSource} from "../components/map/sources/LocationsSource";
 import {LocationsLayer} from "../components/map/layers/LocationsLayer";
@@ -13,11 +12,12 @@ import useAuth from "../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import {TravelEntryModel} from "../models/travelEntry";
 import appConstants from "../constants/appConstants";
-import {createSecurePair} from "tls";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMagnifyingGlassMinus, faMapLocationDot, faPlus} from "@fortawesome/free-solid-svg-icons";
 
 export const UserDashboardPage: React.FC<PageProps> = () => {
     const mapboxAccessToken = process.env.REACT_APP_MAPBOX_KEY ?? ''
-    const [travelEntries, setTravelEntries] = useState(data.travelEntries)
+    const [travelEntries, setTravelEntries] = useState<TravelEntryModel[]>([])
     const [locations, setLocations] = useState<LocationModel[]>();
     const {auth} = useAuth()
     const navigate = useNavigate()
@@ -61,14 +61,29 @@ export const UserDashboardPage: React.FC<PageProps> = () => {
             {auth ? (
                 <div className="flex-container-hor flex-container-ver">
                     <div className="half-screen mobile-top">
-                        <h2>Your trips</h2>
+                        {
+                            travelEntries.length > 0 ? (
+                                <h2>Your trips</h2>
+                            ): (
+                                <div>
+                                    <h2>You have no trips so far</h2>
+                                    <p>Hit the
+                                       <span className={'add-trip-icon'}>
+                                            <FontAwesomeIcon icon={faPlus} style={{color: " #fcfcfc",}} />
+                                            <FontAwesomeIcon icon={faMapLocationDot} style={{color: " #fcfcfc",}} />
+                                       </span>
+                                        icon on the map to document you first journey</p>
+                                </div>
+                            )
+                        }
                         <VerticalContainer>
                             {
+                                travelEntries.length > 0 ?
                                 travelEntries.map(entry => (
                                     <TravelEntry travelEntry={entry}
                                                  key={entry.id}
                                                  showLocationsHandler={showLocationsOnMap} />
-                                ))
+                                )): (<div></div>)
                             }
                         </VerticalContainer>
                     </div>

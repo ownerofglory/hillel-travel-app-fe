@@ -14,6 +14,11 @@
     min-height: auto;
 }
 
+.add-trip-icon {
+    padding: 10px;
+    font-size: 20px;
+}
+
 @media (max-width: 480px) {
     .flex-container-ver {
         display: flex;
